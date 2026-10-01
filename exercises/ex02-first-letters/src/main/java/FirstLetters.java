@@ -10,10 +10,20 @@ public class FirstLetters {
 
     public static void main(String[] args) {
         String phrase = "Idol Long Oolong Vertical Europe University Toyota";
-        // Should print ILOVEUT once firstLetters is implemented.
+        // Should print
+        // ILOVEUT once firstLetters is implemented.
         System.out.println("First letters of \"" + phrase + "\": " + firstLetters(phrase));
+        Object x = new String("hello");
+        hi(x, "goodbye");
     }
 
+    public static void hi(String a, Object b){
+        System.out.println(a);
+    }
+
+    public static void hi(Object a, String b){
+        System.out.println(b);
+    }
     /**
      * Given a string of words separated by single spaces, returns a new string
      * made of the first character of each word, in order. You may assume the
