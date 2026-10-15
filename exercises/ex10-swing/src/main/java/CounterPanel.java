@@ -37,10 +37,6 @@ public class CounterPanel extends JPanel {
                 label.setText("Count: " + count);
         }
     });
-    // TODO: add an action listener to `button` (see Chapter 4.3:
-    //       button.addActionListener(...)). When the button is clicked, its
-    //       actionPerformed should increment `count` and then call
-    //       label.setText("Count: " + count) so the label shows the new total.
   }
 
   /**
