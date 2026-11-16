@@ -109,7 +109,15 @@ public class NumberTriangle {
     //       value of wherever you ended up. An empty path means "stay here".
     //       Hint: String#charAt(int) and String#length() are all you need for the
     //       iterative version; a recursive version can use String#substring(1).
-    return 0;
+    NumberTriangle currTree = this;
+    for (int i = 0; i < path.length(); i++){
+      if (path.charAt(i) == 'l') {
+        currTree = currTree.left;
+      } else if (path.charAt(i) == 'r') {
+        currTree = currTree.right;
+      }
+    }
+    return currTree.root;
   }
 
   /**
@@ -166,28 +174,43 @@ public class NumberTriangle {
     // to work with when reading a file line by line. See the file-reading section
     // of the "APIs, JSON, and Files" chapter.
     BufferedReader br = Files.newBufferedReader(Path.of(fname));
-
+    NumberTriangle currTri = null;
+    NumberTriangle[] prevRow;
     // TODO: define any variables that you want to use to keep track of things
     //       between iterations of the loop below (for example, the row of
     //       NumberTriangle objects that you built on the previous iteration).
 
-    // We need to return the top of the NumberTriangle, so here is a variable for it.
-    NumberTriangle top = null;
-
     String line = br.readLine();
-    while (line != null) {
 
+    NumberTriangle top = new NumberTriangle(Integer.parseInt(line));
+
+    prevRow = new NumberTriangle[] {top};
+
+    while ((line = br.readLine()) != null) {
       // Remove this line when you are done; it is here so that the starter code
       // prints the contents of the file when you run it.
       System.out.println(line);
-
+      String[] roots = line.split(" ");
+      NumberTriangle[] currRow = new NumberTriangle[roots.length];
+      for (int i = 0; i < roots.length; i++){
+        NumberTriangle currRoot = new NumberTriangle(Integer.parseInt(roots[i]));
+        currRow[i] = currRoot;
+        if (i > prevRow.length - 1){
+          prevRow[i - 1].right = currRoot;
+        }
+        else if ((i - 1) < 0){
+          prevRow[i].left = currRoot;
+        } else {
+          prevRow[i - 1].right = currRoot;
+          prevRow[i].left = currRoot;
+        }
+      }
+      prevRow = currRow;
       // TODO: process the line. Splitting it on spaces gives you the numbers in
       //       this row; make a NumberTriangle for each one, then wire this row up
       //       as the children of the previous row. Remember the aliasing: the
       //       right child of one node is the left child of the next node over.
 
-      // read the next line
-      line = br.readLine();
     }
     br.close();
     return top;
